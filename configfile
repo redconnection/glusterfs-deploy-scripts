@@ -1,23 +1,11 @@
 #specify the IP addresses or hostnames of the server_ip nodes below separated by ',' as shown below.
 SERVER_IP_ADDRS="192.168.1.22,192.168.1.69,192.168.1.62,192.168.1.69"
 
-#Specify the IP address or hostnames of clients here.
-CLIENT_IP_ADDRS="192.168.1.64"
-
-#specify the glusterfs version below. '.tar.gz' at the end can be omitted. Scripts extract only version.
-GLUSTER_VERSION="glusterfs-3.3.0qa14.tar.gz"
-
-#specify the directory where glusterfs tarball will be untarred and installed.
-NODE_BUILD_DIR="/home/hadoop/Gluster"
-
-#specify the prefix path here. This is where glusterfs will be installed if one chooses to install gluster from source.
-PREFIX_PATH="/opt/glusterfs-3.3.0qa20"
-
-#Specify the git repo here
-GIT_REPO="/gluster/glusterfs/"
-
 #specify a management node ip addr or valid resolvable hostname here. This node is used ONLY to execute all the gluster cli commands. THIS MUST BE PART OF THE SERVER MACHINES LISTED ABOVE.
 MGMT_NODE="192.168.1.22"
+
+#Specify the IP address or hostnames of clients here.
+CLIENT_IP_ADDRS="192.168.1.64"
 
 #Specify the volume name here.
 VOLNAME="hosdu"
@@ -37,18 +25,18 @@ STRIPE_COUNT="2"
 SERVER_EXPORT_DIR="/tmp/bricks"
 
 #specify here number of bricks volume should have. remember it should match the stripe/replica count'
-NO_OF_BRICKS="8"
+NO_OF_BRICKS="4"
 
 #Specify the transport type of the volume. Possible values are tcp, rdma and tcp,rdma
-TRANS_TYPE="tcp,rdma"
+TRANS_TYPE="tcp"
 
 #specify the mountpoint
 MOUNTPOINT="/mnt/"
 
 #specify the mount point i.e client protocol here. valid values are 'nfs' and 'fuse' and 'rdma'. Specify 'rdma' only in case of tcp,rdma transport type.
 #Else it wil lbe rejected
-MOUNT_TYPE="rdma"
+MOUNT_TYPE="nfs"
 
 LOG_ARCHIVE="/tmp/sanity-run"
 
-EMAIL="vishwanath@shell.domain.com:/home/vishwanath/"
+EMAIL=""
