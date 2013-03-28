@@ -78,44 +78,6 @@ def get_mgmt_node():
     return mgmt_node
 
 
-#get the version of glusterfs
-def get_gluster_version():
-    try:
-        tarball = rh_config_dict['GLUSTER_VERSION']
-    except:
-        print 'Unable to find the gluster version. Please set the GLUSTER_VERSION in config file'
-        sys.exit(1)
-
-    return tarball
-
-
-def get_git_repo():
-    try:
-        git_repo = rh_config_dict['GIT_REPO']
-    except:
-        print 'Unable to find the git repo. Please set the GIT_REPO in configfile'
-        sys.exit(1)
-
-    return git_repo
-
-
-
-def get_build_dir():
-    invalid_build_dir = ['/', '//', '/root', '/root/', '/usr', '/usr/', '/etc', '/etc/', '/sbin', '/sbin/', '/boot', '/boot/', '/opt', '/opt/', '/var', '/var/', '/bin', '/bin/']
-
-    try:
-        build_dir = rh_config_dict['NODE_BUILD_DIR']
-        if build_dir in invalid_build_dir:
-            print build_dir + ' can not be build directory. Using /tmp/build-dir as build directory'
-            build_dir = '/tmp/build-dir'
-    except:
-        print 'Unable to find the build directory. Using /tmp/build-dir as build directory'
-        build_dir = '/tmp/build-dir'
-
-    return build_dir
-
-
-
 def get_server_export_dir():
     try:
         export_dir = rh_config_dict['SERVER_EXPORT_DIR']
@@ -292,28 +254,6 @@ def run_command(node, cmd, verbose):
 
 #NOTE: I'm not sure how mush of above code is robust. Because if the remote machine sends back enough data to fill the buffer of 'channel file object' then,
 #      host (this machine) may hang forever. Need a better way to handle this issue. Current code just assumes that the remote machine doesn't send lot of data.
-
-
-#Do scp to node machine using scp command
-def rcopy(node, srcfile, destpath, verbose):
-        if verbose == True:
-            print '>>>>>>>>>>>>>>>>>>> doing remote copy to host ' + node + ' <<<<<<<<<<<<<<<<<<<<<<'
-        scpcmd = 'scp ' + srcfile + ' ' + node + ':' + destpath
-        if verbose == True:
-            print scpcmd
-        try:
-            if verbose == True:
-                os.system(scpcmd)
-            else:
-                os.system(scpcmd + '> /dev/null 2>&1')
-        except:
-            print scpcmd + ' failed'
-
-        if verbose == True:
-            print '\n\n'
-
-        return None
-
 
 
 def main():
