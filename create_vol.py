@@ -6,7 +6,6 @@ import run_helper
 
 
 
-
 def pre_create_cleanup(nodes, export_dir):
     for node in nodes:
         cmd = 'pgrep gluster | xargs kill -9'
@@ -27,7 +26,6 @@ def pre_create_cleanup(nodes, export_dir):
         cmd = 'rm -f /usr/local/var/log/glusterfs/.c*'
         run_helper.run_command(node, cmd, False)
 
-
         cmd = 'rm -rf /var/log/glusterfs/*'
         run_helper.run_command(node, cmd, False)
 
@@ -35,6 +33,28 @@ def pre_create_cleanup(nodes, export_dir):
         run_helper.run_command(node, cmd, False)
 
     return 0
+
+def create_gluster_partition
+    mgmt_node = run_helper.get_mgmt_node()
+    nodes = run_helper.get_nodes_ip()
+
+
+    for node in nodes:
+        cmd = 'pvcreate GLUSTERPV --force; vgcreate $GLUSTERVG $GLUSTERPV'
+        run_helper.run_command(node, cmd, False)
+
+	cmd = 'lvcreate -n $GLUSTERLV -L 2GB $GLUSTERVG'
+        run_helper.run_command(node, cmd, False)
+
+	cmd = 'mkfs -t xfs -i size=512 /dev/$GLUSTERVG/$GLUSTERLV'
+        run_helper.run_command(node, cmd, False)
+
+	cmd = 'echo `xfs_admin -u /dev/$GLUSTERVG/$GLUSTERLV` $GLUSTEREXPORT  xfs  allocsize=4096,inode64 0 0 >> /etc/fstab'
+	run_helper.run_command(node, cmd, False)
+
+    return 0
+
+
 
 
 def create_gluster_volume():
